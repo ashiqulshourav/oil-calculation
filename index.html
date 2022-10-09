@@ -131,7 +131,7 @@
 
             if ((object.totalOil + oil) > object.oilLimitation) {
                 let getOil = object.oilLimitation - object.totalOil;
-                output.innerText = `You will get only ${getOil} liter oil & You can't buy more oil in this month. Please try again next month.`;
+                output.innerText = `You will get only ${getOil} liter oil on this month.`;
                 output.style.color = "red";
                 animateOutput()
             } else if ((object.totalOil + oil) === object.oilLimitation) {
