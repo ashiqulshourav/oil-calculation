@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .wrapper {
+            width: 400px;
+            padding: 10px;
+            background-color: #3b3636;
+            color: white;
+            border-radius: 10px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        input {
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+        
+        input[type="submit"] {
+            cursor: pointer;
+            background-color: aqua;
+            border: none;
+            outline: none;
+        }
+        
+        .output.animate {
+            animation: fadeIn 0.3s linear;
+            animation-iteration-count: 1;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <form action="#" id="oilForm">
+            <label for="oilInput">How many liter oil you need?</label>
+            <input type="number" id="oilInput" placeholder="0">
+            <input type="submit" value="Submit">
+            <span class="output"></span>
+        </form>
+    </div>
+    <script>
+        // make a function 
+        // store oil value in a object 
+        // check car oil limitation
+        // if cross the limit then show a info msg
+        // reset the old total oil only for date 01 & 00:00 
+
+        // make a function for calculate oil for car
+
+        let oilForm = document.querySelector('#oilForm'); // oil input form
+        let oilInput = document.querySelector('#oilInput');
+        let output = document.querySelector('.output');
+        let date = new Date();
+        let currentDate = date.getDate(); // current date
+        let time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+        // call the oilCalculate function when press submit button
+        oilForm.addEventListener('submit', oilCalculate)
+
+
+        let object = {
+            oilLimitation: 10, // set total limitation for any vehicle
+            totalOil: 0, // your taken total oil
+        }
+
+        // reset total oil for every month first date
+        if ((currentDate === 9) && (time == "0:0:0")) {
+            object.totalOil = 0;
+        }
+
+        // animation for output 
+        function animateOutput() {
+            output.classList.add('animate');
+            output.addEventListener('animationend', function() {
+                output.classList.remove('animate');
+            })
+        }
+
+        function oilCalculate(e) {
+            e.preventDefault()
+            let oil = parseInt(oilInput.value);
+
+            if ((object.totalOil + oil) > object.oilLimitation) {
+                let getOil = object.oilLimitation - object.totalOil;
+                output.innerText = `You will get only ${getOil} liter oil`;
+                output.style.color = "red";
+                animateOutput()
+            } else if ((object.totalOil + oil) === object.oilLimitation) {
+                object.totalOil += oil;
+                output.innerText = "Your month limitation is done & You can't buy more oil in this month";
+                output.style.color = "#70ff70";
+                animateOutput()
+            } else {
+                object.totalOil += oil;
+                output.innerText = `You are able to get ${oil} liter oil \nYour already taken ${object.totalOil} liter oil  \nYour have remain only ${object.oilLimitation - object.totalOil} liter oil`;
+                output.style.color = "#70ff70";
+                animateOutput()
+            }
+
+            oilInput.value = ""; // reset input value
+
+        }
+    </script>
+</body>
+
+</html>
