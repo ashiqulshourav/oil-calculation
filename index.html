@@ -7,16 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             width: 100%;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            padding: 0 20px;
+        }
+        
+        h2 {
+            max-width: 400px;
+            color: red;
+            margin-bottom: 10px;
         }
         
         .wrapper {
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             padding: 10px;
             background-color: #3b3636;
             color: white;
@@ -62,6 +77,8 @@
 </head>
 
 <body>
+
+    <h2>This is for a vehicle oil calculation for each month. after one month oil calculate will be reset. I set only 10 liter limitation. </h2>
     <div class="wrapper">
         <form action="#" id="oilForm">
             <label for="oilInput">How many liter oil you need?</label>
@@ -114,17 +131,17 @@
 
             if ((object.totalOil + oil) > object.oilLimitation) {
                 let getOil = object.oilLimitation - object.totalOil;
-                output.innerText = `You will get only ${getOil} liter oil`;
+                output.innerText = `You will get only ${getOil} liter oil & You can't buy more oil in this month. Please try again next month.`;
                 output.style.color = "red";
                 animateOutput()
             } else if ((object.totalOil + oil) === object.oilLimitation) {
                 object.totalOil += oil;
-                output.innerText = "Your month limitation is done & You can't buy more oil in this month";
+                output.innerText = "Your month limitation is done & You can't buy more oil in this month.";
                 output.style.color = "#70ff70";
                 animateOutput()
             } else {
                 object.totalOil += oil;
-                output.innerText = `You are able to get ${oil} liter oil \nYour already taken ${object.totalOil} liter oil  \nYour have remain only ${object.oilLimitation - object.totalOil} liter oil`;
+                output.innerText = `You are able to get ${oil} liter oil \nYour already taken ${object.totalOil} liter oil  \nYour have remain only ${object.oilLimitation - object.totalOil} liter oil.`;
                 output.style.color = "#70ff70";
                 animateOutput()
             }
